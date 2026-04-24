@@ -1,0 +1,26 @@
+# render.yaml — Render.com Blueprint Specification
+# This file tells Render exactly how to build and run your app.
+
+services:
+  - type: web
+    name: skillbridge-bot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python run_all.py
+    envVars:
+      - key: PYTHONPATH
+        value: /opt/render/project/src
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: DATABASE_URL
+        sync: false
+      - key: BOT_TOKEN
+        sync: false
+      - key: ADMIN_IDS
+        sync: false
+      - key: ADMIN_API_KEY
+        sync: false
+      - key: SECRET_KEY
+        sync: false
+      - key: REDIS_URL
+        value: ""

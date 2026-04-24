@@ -1,0 +1,65 @@
+"""
+SkillBridge.uz — Site Configuration
+Centralized configuration management for the website and API
+"""
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Domain Configuration
+DOMAIN = os.getenv("DOMAIN", "skillbridge.uz")
+ENVIRONMENT = os.getenv("ENVIRONMENT", "production")
+DEBUG = ENVIRONMENT == "development"
+
+# URLs
+SITE_URL = os.getenv("SITE_URL", f"https://{DOMAIN}")
+API_BASE_URL = os.getenv("API_BASE_URL", f"{SITE_URL}/api")
+
+# Web Server Configuration
+WEB_HOST = os.getenv("WEB_HOST", "0.0.0.0")
+WEB_PORT = int(os.getenv("WEB_PORT", "8000"))
+
+# CORS Origins
+CORS_ORIGINS = [
+    f"http://{DOMAIN}",
+    f"https://{DOMAIN}",
+    f"http://www.{DOMAIN}",
+    f"https://www.{DOMAIN}",
+    "localhost",
+    "127.0.0.1",
+    "http://localhost:3000",
+    "http://localhost:8000",
+]
+
+# API Configuration
+ADMIN_API_KEY = os.getenv("ADMIN_API_KEY", "change_me_in_production")
+DEFAULT_LANG = "uz"
+SUPPORTED_LANGS = ["uz", "ru", "en"]
+
+# Rate Limiting
+RATE_LIMIT_ENABLED = os.getenv("RATE_LIMIT_ENABLED", "true").lower() == "true"
+RATE_LIMITS = {
+    "default": "100/minute",
+    "register": "5/minute",
+    "search": "30/minute",
+    "api_admin": "10/minute",
+}
+
+# Settings summary
+SETTINGS_SUMMARY = f"""
+╔═══════════════════════════════════════════════╗
+║    SkillBridge.uz Configuration — {ENVIRONMENT.upper():11} ║
+╠═══════════════════════════════════════════════╣
+║ Domain:     {DOMAIN:34} ║
+║ Site URL:   {SITE_URL:34} ║
+║ API Base:   {API_BASE_URL:34} ║
+║ Host:Port:  {WEB_HOST}:{WEB_PORT:32} ║
+║ CORS Enabled: {str(bool(CORS_ORIGINS)):33} ║
+╚═══════════════════════════════════════════════╝
+"""
+
+def print_config():
+    """Print current configuration summary"""
+    print(SETTINGS_SUMMARY)

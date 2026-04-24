@@ -1,0 +1,28 @@
+"""
+utils/helpers.py — Common helper functions for the bot.
+"""
+
+from datetime import datetime
+
+
+def get_current_timestamp() -> str:
+    """Return the current UTC time as an ISO-formatted string."""
+    return datetime.utcnow().isoformat()
+
+
+def format_timestamp(iso_str) -> str:
+    """
+    Format an ISO timestamp or datetime object into a human-readable date.
+    Example output: '2023-10-15 14:30'
+    """
+    if not iso_str:
+        return "Unknown"
+    
+    if isinstance(iso_str, datetime):
+        return iso_str.strftime("%Y-%m-%d %H:%M")
+        
+    try:
+        dt = datetime.fromisoformat(str(iso_str))
+        return dt.strftime("%Y-%m-%d %H:%M")
+    except ValueError:
+        return str(iso_str)
